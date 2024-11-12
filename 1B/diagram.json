@@ -1,0 +1,69 @@
+{
+  "version": 1,
+  "author": "Anonymous maker",
+  "editor": "wokwi",
+  "parts": [
+    { "type": "wokwi-breadboard-half", "id": "bb1", "top": 35.4, "left": -122, "attrs": {} },
+    { "type": "board-esp32-devkit-c-v4", "id": "esp", "top": 28.8, "left": 244.84, "attrs": {} },
+    {
+      "type": "wokwi-dht22",
+      "id": "dht1",
+      "top": -134.1,
+      "left": 61.8,
+      "attrs": { "humidity": "79.5", "temperature": "60.4" }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led1",
+      "top": -42,
+      "left": -101.8,
+      "attrs": { "color": "green" }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led2",
+      "top": -42,
+      "left": -44.2,
+      "attrs": { "color": "yellow" }
+    },
+    { "type": "wokwi-led", "id": "led3", "top": -42, "left": 3.8, "attrs": { "color": "red" } },
+    {
+      "type": "wokwi-relay-module",
+      "id": "relay1",
+      "top": -64.2,
+      "left": -255.6,
+      "rotate": 270,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-buzzer",
+      "id": "bz1",
+      "top": 117.6,
+      "left": -228.6,
+      "rotate": 270,
+      "attrs": { "volume": "0.1" }
+    }
+  ],
+  "connections": [
+    [ "esp:TX", "$serialMonitor:RX", "", [] ],
+    [ "esp:RX", "$serialMonitor:TX", "", [] ],
+    [ "esp:3V3", "bb1:tp.25", "green", [ "h0" ] ],
+    [ "esp:GND.1", "bb1:tn.19", "black", [ "h0" ] ],
+    [ "dht1:SDA", "esp:15", "green", [ "v0" ] ],
+    [ "led1:A", "esp:13", "green", [ "v0" ] ],
+    [ "led2:C", "bb1:tn.7", "green", [ "v0" ] ],
+    [ "led3:A", "esp:12", "green", [ "v0" ] ],
+    [ "relay1:VCC", "bb1:tp.3", "red", [ "v0" ] ],
+    [ "dht1:VCC", "bb1:tp.17", "red", [ "v0" ] ],
+    [ "led1:C", "bb1:tn.1", "green", [ "v0" ] ],
+    [ "led3:C", "bb1:tn.10", "green", [ "v57.6", "h-9.2" ] ],
+    [ "led2:A", "esp:14", "green", [ "v0" ] ],
+    [ "relay1:GND", "bb1:tn.4", "black", [ "v0" ] ],
+    [ "relay1:IN", "esp:32", "green", [ "v0" ] ],
+    [ "bz1:1", "bb1:tn.5", "green", [ "h0" ] ],
+    [ "bz1:2", "esp:33", "green", [ "h0" ] ],
+    [ "bb1:14b.h", "esp:12", "green", [ "v0" ] ],
+    [ "dht1:GND", "bb1:tn.18", "black", [ "v0" ] ]
+  ],
+  "dependencies": {}
+}
