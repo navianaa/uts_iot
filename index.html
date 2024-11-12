@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Data Display</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+      }
+      .data-section {
+        margin-bottom: 20px;
+      }
+      .data-section h2 {
+        font-size: 1.2em;
+        margin-bottom: 10px;
+      }
+      .data-section ul {
+        list-style-type: none;
+        padding: 0;
+      }
+      .data-item {
+        margin-bottom: 5px;
+      }
+      .data-subsection {
+        margin-left: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Data Display</h1>
+
+    <div id="dataContainer"></div>
+
+    <script>
+      async function fetchData() {
+        try {
+          const response = await fetch("http://localhost:3000/api/data");
+          const data = await response.json();
+
+          // Display the data
+          displayData(data);
+        } catch (error) {
+          console.error("Error fetching data:", error);
+        }
+      }
+
+      function displayData(data) {
+        const container = document.getElementById("dataContainer");
+
+        // Display main values
+        const mainValuesSection = document.createElement("div");
+        mainValuesSection.classList.add("data-section");
+        mainValuesSection.innerHTML = `
+                <h2>Main Values</h2>
+                <ul>
+                    <li class="data-item">Suhu Max: ${data.suhumax}</li>
+                    <li class="data-item">Suhu Min: ${data.suhumin}</li>
+                    <li class="data-item">Suhu Rata-rata: ${data.suhurata}</li>
+                </ul>
+            `;
+        container.appendChild(mainValuesSection);
+
+        // Display nilai_suhu_max_humid_max array
+        const nilaiSuhuSection = document.createElement("div");
+        nilaiSuhuSection.classList.add("data-section");
+        nilaiSuhuSection.innerHTML = `<h2>Nilai Suhu Max Humid Max</h2>`;
+        data.nilai_suhu_max_humid_max.forEach((item) => {
+          const itemDiv = document.createElement("div");
+          itemDiv.classList.add("data-subsection");
+          itemDiv.innerHTML = `
+                    <ul>
+                        <li class="data-item">Index: ${item.idx}</li>
+                        <li class="data-item">Suhu: ${item.suhu}</li>
+                        <li class="data-item">Humid: ${item.humid}</li>
+                        <li class="data-item">Kecerahan: ${item.kecerahan}</li>
+                        <li class="data-item">Timestamp: ${item.timestamp}</li>
+                    </ul>
+                `;
+          nilaiSuhuSection.appendChild(itemDiv);
+        });
+        container.appendChild(nilaiSuhuSection);
+
+        // Display month_year_max array
+        const monthYearSection = document.createElement("div");
+        monthYearSection.classList.add("data-section");
+        monthYearSection.innerHTML = `<h2>Month Year Max</h2>`;
+        data.month_year_max.forEach((item) => {
+          const itemDiv = document.createElement("div");
+          itemDiv.classList.add("data-subsection");
+          itemDiv.innerHTML = `<li class="data-item">Month Year: ${item.month_year}</li>`;
+          monthYearSection.appendChild(itemDiv);
+        });
+        container.appendChild(monthYearSection);
+      }
+
+      fetchData();
+    </script>
+  </body>
+</html>
